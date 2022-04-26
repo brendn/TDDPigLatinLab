@@ -1,4 +1,6 @@
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TDDPigLatin {
 
@@ -24,6 +26,53 @@ public class TDDPigLatin {
         }
 
         return word.substring(vowel) + word.substring(0, vowel) + "ay";
+    }
+    
+    /**
+     * Translates the given phrase to Pig Latin.
+     * 
+     * @param phrase Input phrase
+     * @return The input phrase translated to Pig Latin.
+     */
+    public static String translatePhrase(String phrase) {
+    	//Check for words
+    	Matcher matcher = Pattern.compile("\\p{L}+").matcher(phrase);
+    	StringBuffer buffer = new StringBuffer();
+    	
+    	//For each word, translate to Pig Latin
+    	while (matcher.find()) {
+    		String s = matcher.group();
+    		if (!hasNumber(s) && !hasSymbol(s)) {
+        		matcher.appendReplacement(buffer, translate(s));
+    		}
+    	}
+    	
+    	matcher.appendTail(buffer);
+    	
+    	//Return translated phrase
+    	return buffer.toString();
+    }
+    
+    /**
+     * Checks whether or not the given String contains a symbol.
+     * 
+     * @param s Input string
+     * @return True if the String contains a symbol.
+     */
+    public static boolean hasSymbol(String s) {
+    	Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+    	Matcher m = p.matcher(s);
+    	return m.find();
+    }
+    
+    /**
+     * Checks whether or not the given String contains a number.
+     * 
+     * @param s Input string
+     * @return True if the String contains a number.
+     */
+    public static boolean hasNumber(String s) {
+        return s.matches(".*[0-9].*");
     }
 
     /**

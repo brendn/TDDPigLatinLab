@@ -45,5 +45,19 @@ class TDDPigLatinTest {
 		assertEquals("engthsstray", TDDPigLatin.translate("strengths"));
 		assertEquals("udelstray", TDDPigLatin.translate("strudel"));
 	}
+	
+	@Test
+	void testHasSymbol() {
+		assertTrue(TDDPigLatin.hasSymbol("bob@bob.com"));
+		assertFalse(TDDPigLatin.hasSymbol("Hey"));
+		assertTrue(TDDPigLatin.hasSymbol("Hello!!!!"));
+	}
+	
+	@Test
+	void testHasNumber() {
+		assertTrue(TDDPigLatin.hasNumber("h3ll0"));
+		assertFalse(TDDPigLatin.hasSymbol("Hey"));
+		assertTrue(TDDPigLatin.hasSymbol("This is a number: 1"));
+	}
 
 }
